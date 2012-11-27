@@ -12,12 +12,21 @@ $(function( $ ) {
     el: "#goat-list",
 
     initialize: function () {
+      var self = this;
       this.collection.fetch({
         success: function (collection, response) {
-          console.log(response);
+          self.render(response);
         }
       });
     },
+
+    render: function (goats) {
+      var content = "";
+      _.each(goats, function(goat) { 
+        content += "<p>" + goat.name + " is " + goat.age + "</p>";
+      }); 
+      this.$el.html(content);
+    }
   });
 });
 
