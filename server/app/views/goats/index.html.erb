@@ -1,0 +1,27 @@
+<h1>Listing goats</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Hotwater bottles eaten</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @goats.each do |goat| %>
+  <tr>
+    <td><%= goat.name %></td>
+    <td><%= goat.age %></td>
+    <td><%= goat.hotwater_bottles_eaten %></td>
+    <td><%= link_to 'Show', goat %></td>
+    <td><%= link_to 'Edit', edit_goat_path(goat) %></td>
+    <td><%= link_to 'Destroy', goat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Goat', new_goat_path %>

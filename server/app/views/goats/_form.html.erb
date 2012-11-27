@@ -1,0 +1,29 @@
+<%= form_for(@goat) do |f| %>
+  <% if @goat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@goat.errors.count, "error") %> prohibited this goat from being saved:</h2>
+
+      <ul>
+      <% @goat.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :age %><br />
+    <%= f.number_field :age %>
+  </div>
+  <div class="field">
+    <%= f.label :hotwater_bottles_eaten %><br />
+    <%= f.number_field :hotwater_bottles_eaten %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
