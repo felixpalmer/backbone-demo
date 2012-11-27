@@ -21,17 +21,23 @@ $(function( $ ) {
     },
 
     render: function (goats) {
-      var content = "";
-      _.each(goats, function(goat) { 
-        content += "<p>" + goat.name + " is " + goat.age + "</p>";
-      }); 
-      this.$el.html(content);
+      var self = this;
+      
+      // Load template for goat list and render data
+      app.loadTemplate('goat-list', function(data) {
+        var template = _.template(data);
+        self.$el.html(template({"goats": goats}));
+      });
     }
   });
+  
+  app.loadTemplate = function(name, success){
+    $.get('js/templates/' + name + '.html', success);
+  };
 });
 
 // Initialize model, fetch template and start app
 $(function() {
   var goatCollection = new app.GoatCollection();
-  new app.AppView( {"collection": goatCollection});
+  new app.AppView({"collection": goatCollection});
 });

@@ -1,0 +1,21 @@
+<table class="table table-bordered" id='goat-table' >
+    <thead>
+        <tr>
+            <th><b>Name</b></th>
+            <th><b>Age</b></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if ($.isEmptyObject(goats)) { %>
+        <tr><td colspan='2'>No Goats Found</td></tr>
+        <% } else {
+        $.each(goats, function () { %>
+        <tr class="number-row" data-id=<%= this.id%>>
+            <td><%= this.name%></td>
+            <td><%= this.age%></td>
+        </tr>
+        <% })
+        }
+        %>
+    </tbody>
+</table>
