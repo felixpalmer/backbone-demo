@@ -33,6 +33,11 @@ $(function( $ ) {
           self.render(self.collection);
         }
       });
+
+	  // Bind the render function to change events in the collection
+      this.collection.bind('add remove', function() {
+        self.render(self.collection);
+      });
     },
 
     render: function (goats) {
@@ -46,8 +51,9 @@ $(function( $ ) {
     },
 
     deleteGoat: function (e) {
-      var id = $(e.target).data("id");
-      this.collection.get(id).destroy();
+      var goat = this.collection.get($(e.target).data("id"));
+      goat.destroy();
+      this.collection.remove(goat);
     },
   });
 
@@ -63,7 +69,8 @@ $(function( $ ) {
 		"hotwater_bottles_eaten": this.$el.find("#waterbottle-field").val(),
 	  }
 	  var goat = new app.Goat(data);
-	  goat.save();
+	  goat.save(); // Should really implement success callback here to get id from server after POST
+	  this.collection.add(goat);
 	},
   });
   
@@ -76,5 +83,5 @@ $(function( $ ) {
 $(function() {
   var goatCollection = new app.GoatCollection();
   var goatListView = new app.GoatListView({"collection": goatCollection});
-  var goatAddView = new app.GoatAddView();
+  var goatAddView = new app.GoatAddView({"collection": goatCollection});
 });
