@@ -6,6 +6,14 @@ $(function( $ ) {
   app.GoatCollection = Backbone.Collection.extend({
     url: '/goats.json',
   });
+
+  app.Goat = Backbone.Model.extend({
+    initialize: function(data) {
+	  this.set(data);
+	},
+
+	urlRoot: '/goats',
+  });
   
   // The view
   app.AppView = Backbone.View.extend({
@@ -15,7 +23,12 @@ $(function( $ ) {
       var self = this;
       this.collection.fetch({
         success: function (collection, response) {
-          self.render(response);
+		  _.each(response, function(data) {
+			 console.log(data);
+			var goat = new app.Goat(data);
+		  	self.collection.add(goat);
+		  });
+          self.render(self.collection);
         }
       });
     },
@@ -26,7 +39,7 @@ $(function( $ ) {
       // Load template for goat list and render data
       app.loadTemplate('goat-list', function(data) {
         var template = _.template(data);
-        self.$el.html(template({"goats": goats}));
+        self.$el.html(template({"goats": goats.toJSON()}));
       });
     }
   });
@@ -39,5 +52,5 @@ $(function( $ ) {
 // Initialize model, fetch template and start app
 $(function() {
   var goatCollection = new app.GoatCollection();
-  new app.AppView({"collection": goatCollection});
+  var appView = new app.AppView({"collection": goatCollection});
 });
