@@ -4,7 +4,7 @@ var app = app || {};
 $(function( $ ) {
   // The model
   app.GoatCollection = Backbone.Collection.extend({
-    url: '/goats.json',
+    url: '/goats',
   });
 
   app.Goat = Backbone.Model.extend({
@@ -18,6 +18,8 @@ $(function( $ ) {
   // The main list view
   app.GoatListView = Backbone.View.extend({
     el: "#goat-list",
+
+    events: {"click .delete-goat-btn": "deleteGoat"},
 
     initialize: function () {
       var self = this;
@@ -41,7 +43,12 @@ $(function( $ ) {
         var template = _.template(data);
         self.$el.html(template({"goats": goats.toJSON()}));
       });
-    }
+    },
+
+    deleteGoat: function (e) {
+      var id = $(e.target).data("id");
+      this.collection.get(id).destroy();
+    },
   });
 
   app.GoatAddView = Backbone.View.extend({
