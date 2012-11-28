@@ -15,8 +15,8 @@ $(function( $ ) {
 	urlRoot: '/goats',
   });
   
-  // The view
-  app.AppView = Backbone.View.extend({
+  // The main list view
+  app.GoatListView = Backbone.View.extend({
     el: "#goat-list",
 
     initialize: function () {
@@ -43,6 +43,22 @@ $(function( $ ) {
       });
     }
   });
+
+  app.GoatAddView = Backbone.View.extend({
+	el: "#new-goat-container",
+
+	events: {"click #create-goat-button": "create"},
+
+	create: function() {
+	  var data = {
+		"name": this.$el.find("#name-field").val(),
+		"age": this.$el.find("#age-field").val(),
+		"hotwater_bottles_eaten": this.$el.find("#waterbottle-field").val(),
+	  }
+	  var goat = new app.Goat(data);
+	  goat.save();
+	},
+  });
   
   app.loadTemplate = function(name, success){
     $.get('js/templates/' + name + '.html', success);
@@ -52,5 +68,6 @@ $(function( $ ) {
 // Initialize model, fetch template and start app
 $(function() {
   var goatCollection = new app.GoatCollection();
-  var appView = new app.AppView({"collection": goatCollection});
+  var goatListView = new app.GoatListView({"collection": goatCollection});
+  var goatAddView = new app.GoatAddView();
 });
