@@ -3,6 +3,8 @@
         <tr>
             <th><b>Name</b></th>
             <th><b>Age</b></th>
+            <th><b>Hot waterbottles eaten</b></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -13,6 +15,8 @@
         <tr class="number-row" data-id=<%= this.id%>>
             <td><%= this.name%></td>
             <td><%= this.age%></td>
+            <td><%= this.hotwater_bottles_eaten%></td>
+			<td><button class="btn btn-danger delete-goat-btn" data-id=<%= this.id %>>Delete</button></td>
         </tr>
         <% })
         }
